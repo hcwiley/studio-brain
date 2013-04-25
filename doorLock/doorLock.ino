@@ -8,6 +8,7 @@ Stepper myStepper(steps, 12,11, 13,3);
 
 int powIn;                                
 int total;
+int dir;
 void setup()
 {
   Serial.begin(9600);
