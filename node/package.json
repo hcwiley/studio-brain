@@ -1,28 +1,34 @@
 {
-  "name"      : "mediaEvent",
+  "name"      : "studio-brain",
   "version"   : "0.0.1",
   "private": true,
   "engines": {
     "node": ">0.8"
   },
-  "subdomain": "mediaEvent",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "coffee-script"         : "1.4.0",
-    "express"               : "3.0.3",
-    "connect-assets"        : "2.2.1",
-    "cookie"                : "0.0.4",
+    "async": "*",
+    "coffee-script"         : "*",
+    "express"               : "*",
+    "connect-assets"        : "*",
+    "cookie"                : "*",
     "jade"                  : "*",
     "less"                  : "*",
     "less-middleware"       : "*",
-    "mongoose"              : "3.0.1",
+    "mongoose"              : "*",
+    "bcrypt"                : "*",
+    "mongoose-types"        : "*",
     "connect-mongo"         : "*",
-    "socket.io"             : "0.9.6",
+    "passport"              : "*",
+    "passport-local"        : "*",
+    "socket.io"             : "*",
     "socket.io-client"      : "*",
-    "node-osc"                : "*",
+    "node-osc"              : "*",
     "twitter-bootstrap"     : "*",
-    "supervisor"            : "0.3.2"
+    "passport"              : "*",
+    "supervisor"            : "*",
+    "underscore": "*"
   }
 }

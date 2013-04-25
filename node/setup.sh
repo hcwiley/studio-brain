@@ -24,3 +24,6 @@ curl http://backbonejs.org/backbone.js > assets/js/backbone.js
 
 # Copy socket.io client to assets
 cp node_modules/socket.io-client/dist/socket.io.js assets/js/socket.io.js
+
+mongo studio-brain --eval "db.users.save({'name':'foo', 'email':'foo@gmail.com', 'hash' : '\$2a\$10\$rMNFo1LEUYnKCcBAwMO23u4Az7tgm1fanK77X\/2TLsSxO1wr3M7Za', 'salt' : '\$2a\$10\$rMNFo1LEUYnKCcBAwMO23u'})"
+

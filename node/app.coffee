@@ -5,12 +5,30 @@ config = require("./config")
 express = require("express")
 path = require("path")
 http = require("http")
+routes = require('./routes')
 socketIo = require("socket.io")
 osc = require("node-osc")
 mongoose = require("mongoose")
 MongoStore = require("connect-mongo")(express)
+passport = require("passport")
+LocalStrategy = require("passport-local").Strategy
 sessionStore = new MongoStore(url: config.mongodb)
-fs = require("fs")
+models = require('./models')
+User = models.User
+
+passport.use "email", new LocalStrategy(
+  usernameField: "email"
+, (email, password, done) ->
+  process.nextTick ->
+    User.authEmail email, password, done
+)
+
+passport.serializeUser (user, done) ->
+  done null, user.id
+
+passport.deserializeUser (id, done) ->
+  User.findById id, (err, user) ->
+    done err, user
 
 # connect the database
 mongoose.connect config.mongodb
@@ -45,6 +63,8 @@ app.configure ->
   app.use express.methodOverride()
   app.use express.cookieParser(config.sessionSecret)
   app.use express.session(store: sessionStore)
+  app.use passport.initialize()
+  app.use passport.session()
   app.use app.router
   app.use require("less-middleware")(src: __dirname + "/public")
   app.use express.static(path.join(__dirname, "public"))
@@ -73,10 +93,26 @@ oscServer.on "message", (msg, info) ->
   #if msg[0].match "/active"
     #console.log msg
 
+app.post "/auth/email", routes.ui.auth.email
+
+app.get "/auth/success", routes.ui.auth.success
+app.get "/auth/failure", routes.ui.auth.failure
+app.get "/auth/logout", routes.ui.auth.logout
+
+app.put "/me", routes.ui.me.update
+
+# you need to be signed for this business!
+app.all "/*", routes.ui.auth.signIn
+
 # UI routes
 app.get "/", (req, res) ->
   res.render "index.jade",
     title: "Studio Time"
+
+app.get "/me", routes.ui.me.show
+
+#app.post "/auth/registerEmail", routes.ui.auth.registerEmail
+
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
