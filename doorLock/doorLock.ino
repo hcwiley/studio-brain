@@ -1,22 +1,18 @@
 
 #include <Stepper.h>
 
-const int steps = 40;  // change this to fit the number of steps per revolution
+const int steps = 4000;  // change this to fit the number of steps per revolution
                                      // for your motor
 
 Stepper myStepper(steps, 12,11, 13,3);
 
 int powIn;                                
 int total;
-int dir;
 void setup()
 {
   Serial.begin(9600);
-  
-  dir = 1;
-  powIn = 1;
-  total = 0;
-  myStepper.setSpeed(400);
+
+  myStepper.setSpeed(100);
 
   Serial.println("hi");
 }
@@ -30,7 +26,6 @@ void loop()
       myStepper.step(1);
       delay(10);
     }
-  myStepper.step(-1); 
   }
   else if( dir == 'r'){
     for(int i = 0; i < 150; i++){
