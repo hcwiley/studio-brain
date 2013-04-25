@@ -15,6 +15,7 @@ LocalStrategy = require("passport-local").Strategy
 sessionStore = new MongoStore(url: config.mongodb)
 models = require('./models')
 User = models.User
+exec = require('child_process').exec
 
 passport.use "email", new LocalStrategy(
   usernameField: "email"
@@ -113,6 +114,11 @@ app.get "/me", routes.ui.me.show
 
 #app.post "/auth/registerEmail", routes.ui.auth.registerEmail
 
+child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if error != null
+      console.log('exec error: ' + error);
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
