@@ -1,0 +1,12 @@
+doctype 5
+html
+  head
+    meta(name="apple-mobile-web-app-capable", content="yes")
+    meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.1, user-scalable=0;', name='viewport')
+    title= title
+    != css('client')
+  body
+    #main
+      block content
+      block extras
+    != js('client')

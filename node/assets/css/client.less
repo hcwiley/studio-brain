@@ -1,0 +1,128 @@
+@import "bootstrap/bootstrap";
+
+html, body {
+  width: 100%;
+  height: 100%;
+  scroll: none;
+  background: url("../img/bg_texture.png");
+}
+
+@import "bootstrap/responsive";
+
+@lightGray:#dedede;
+@hoverColor:#ebb;
+
+#home{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  scroll: none;
+  z-index: 10;
+  text-align: center;
+  .hero {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  img {
+    width: auto;
+    height: 100%;
+  }
+}
+#main{
+  /*position: fixed;*/
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+
+#level1 {
+  position: absolute;
+  display: none;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  > div{
+    float: left;
+  }
+  .level1 {
+    float: left;
+    opacity: 0
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    position: static;
+    .img-wrapper {
+      float: none;
+      position: relative;
+      margin: auto;
+      overflow: hidden;
+      /*top: 0px;*/
+      /*left: 0px;*/
+      height: 100%;
+      width: 100%;
+      /*background: #fff;*/
+      text-align: center;
+      /*width: auto;*/
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .text{
+      z-index: 110;
+      display: none;
+      /*height: */
+      italic {
+        font-style: italic;
+      }
+    }
+  }
+  .level1.open{
+    position: fixed;
+    z-index: 100;
+    background: #000;
+
+    .img-wrapper {
+      height: 80%;
+      width: 100%;
+      margin: 20px 0px;
+      text-align: center;
+      img {
+        position: relative;
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    .text{
+      position: relative;
+      display: block;
+      color: #fff;
+      top: 0px;
+      left: 100px;
+      height: 150px;
+      width: 800px;
+      font-size: 20px;
+      /*height: */
+    }
+  }
+}
+
+.btn-primary {
+  display: block;
+  margin: 5px;
+}
+
+img {
+  max-width: none;
+  max-height: none;
+}
