@@ -1,7 +1,7 @@
 
 #include <Stepper.h>
 
-const int steps = 4000;  // change this to fit the number of steps per revolution
+const int steps = 200;  // change this to fit the number of steps per revolution
                                      // for your motor
 
 Stepper myStepper(steps, 12,11, 13,3);
