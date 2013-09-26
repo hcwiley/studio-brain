@@ -113,11 +113,11 @@ app.get "/", (req, res) ->
     title: "Studio Time"
 
 
-#child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
-    #console.log('stdout: ' + stdout);
-    #console.log('stderr: ' + stderr);
-    #if error != null
-      #console.log('exec error: ' + error);
+child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if error != null
+      console.log('exec error: ' + error);
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
