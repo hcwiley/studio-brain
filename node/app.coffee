@@ -90,10 +90,10 @@ io.sockets.on "connection",  (socket) ->
     console.log "unlock!"
     oscClient.send "/door", "unlock"
 
-oscServer.on "message", (msg, info) ->
-  console.log msg
-  if msg[0].match "/active"
-    console.log msg
+#oscServer.on "message", (msg, info) ->
+  #console.log msg
+  #if msg[0].match "/active"
+    #console.log msg
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
