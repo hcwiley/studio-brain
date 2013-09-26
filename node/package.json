@@ -15,20 +15,14 @@
     "connect-assets"        : "*",
     "cookie"                : "*",
     "jade"                  : "*",
-    "less"                  : "*",
-    "less-middleware"       : "*",
-    "mongoose"              : "*",
-    "bcrypt"                : "*",
-    "mongoose-types"        : "*",
-    "connect-mongo"         : "*",
+    "less"                  : "1.3.3",
+    "less-middleware"       : "0.1.11",
     "passport"              : "*",
     "passport-local"        : "*",
     "socket.io"             : "*",
     "socket.io-client"      : "*",
-    "node-osc"              : "*",
     "twitter-bootstrap"     : "*",
-    "passport"              : "*",
-    "supervisor"            : "*",
-    "underscore": "*"
+    "node-osc"              : "*",
+    "supervisor"            : "*"
   }
 }
