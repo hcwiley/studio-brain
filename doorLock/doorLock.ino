@@ -68,7 +68,7 @@ void loop()
     } else {
       led.setPixelColor(0,GRAY);
     }
-    led.setBrightness(10);
+    led.setBrightness(100);
     led.show();
     delay(1);
 }
