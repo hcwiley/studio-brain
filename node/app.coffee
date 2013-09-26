@@ -90,10 +90,10 @@ io.sockets.on "connection",  (socket) ->
     console.log "unlock!"
     oscClient.send "/door", "unlock"
 
-oscServer.on "message", (msg, info) ->
-  console.log msg
-  if msg[0].match "/active"
-    console.log msg
+#oscServer.on "message", (msg, info) ->
+  #console.log msg
+  #if msg[0].match "/active"
+    #console.log msg
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
@@ -113,11 +113,11 @@ app.get "/", (req, res) ->
     title: "Studio Time"
 
 
-#child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
-    #console.log('stdout: ' + stdout);
-    #console.log('stderr: ' + stderr);
-    #if error != null
-      #console.log('exec error: ' + error);
+child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if error != null
+      console.log('exec error: ' + error);
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")

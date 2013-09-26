@@ -1,9 +1,13 @@
 from OSC import OSCClient, OSCMessage, OSCServer
 from time import sleep
-import serial
+import serial, os
 
-#ser = serial.Serial("/dev/ttyACM0", 9600)
-ser = serial.Serial("/dev/tty.usbmodem1421", 9600)
+SERIAL_PORT = os.environ.get("SERIAL_PORT")
+if not SERIAL_PORT:
+  print "Set the SERIAL_PORT env variable"
+  exit(1)
+ser = serial.Serial(SERIAL_PORT, 9600)
+#ser = serial.Serial("/dev/tty.usbmodem1421", 9600)
 client = OSCClient()
 client.connect( ("0.0.0.0", 8888) )
 server = OSCServer( ("0.0.0.0", 8889) )
