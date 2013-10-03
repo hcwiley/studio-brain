@@ -3,8 +3,8 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 4
-#define LIGHT1 2
-#define LIGHT2 7
+#define FAR_LIGHT 2
+#define NEAR_LIGHT 7
 
 #define GREEN			0x008000
 #define DARKRED			0x8B0000
@@ -32,11 +32,11 @@ void setup()
 {
   Serial.begin(9600);
   
-  pinMode(LIGHT1, OUTPUT);
-  pinMode(LIGHT2, OUTPUT);
+  pinMode(FAR_LIGHT, OUTPUT);
+  pinMode(NEAR_LIGHT, OUTPUT);
   
-  digitalWrite(LIGHT1, LOW);
-  digitalWrite(LIGHT2, LOW);
+  digitalWrite(FAR_LIGHT, LOW);
+  digitalWrite(NEAR_LIGHT, LOW);
   
   myStepper.setSpeed(100);
   
@@ -70,12 +70,20 @@ void loop()
     myStepper.step(2);
   }
   else if( readIn == 'b' ){
-    digitalWrite(LIGHT1, HIGH);
-    digitalWrite(LIGHT2, HIGH);
+    digitalWrite(FAR_LIGHT, HIGH);
+    digitalWrite(NEAR_LIGHT, HIGH);
   }
   else if( readIn == 'd' ){
-    digitalWrite(LIGHT1, LOW);
-    digitalWrite(LIGHT2, LOW);
+    digitalWrite(FAR_LIGHT, LOW);
+    digitalWrite(NEAR_LIGHT, LOW);
+  }
+  else if( readIn == 'n' ){
+    digitalWrite(FAR_LIGHT, LOW);
+    digitalWrite(NEAR_LIGHT, HIGH);
+  }
+  else if( readIn == 'f' ){
+    digitalWrite(FAR_LIGHT, HIGH);
+    digitalWrite(NEAR_LIGHT, LOW);
   }
   if(dir == 'l'){
       led.setPixelColor(0,DARKRED);
