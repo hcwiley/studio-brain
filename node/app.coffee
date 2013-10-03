@@ -90,6 +90,14 @@ io.sockets.on "connection",  (socket) ->
     console.log "unlock!"
     oscClient.send "/door", "unlock"
 
+  socket.on "on", (data) ->
+    console.log "on!"
+    oscClient.send "/lights", "on"
+
+  socket.on "off", (data) ->
+    console.log "off!"
+    oscClient.send "/lights", "off"
+
 #oscServer.on "message", (msg, info) ->
   #console.log msg
   #if msg[0].match "/active"

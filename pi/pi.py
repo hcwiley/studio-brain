@@ -36,7 +36,16 @@ def handleDoor(path, tags, args, source):
   elif args[0] == 'unlock':
     ser.write('r')
 
+def handleLights(path, tags, args, source):
+  print "got message %s" % args
+  if args[0] == 'on':
+    ser.write('b')
+  elif args[0] == 'off':
+    ser.write('d')
+
+
 server.addMsgHandler( "/door", handleDoor)
+server.addMsgHandler( "/lights", handleLights)
 
 # user script that's called by the game engine every frame
 def each_frame():

@@ -22,3 +22,9 @@ $(window).ready ->
   $('.unlock').click ->
     socket.emit "unlock"
 
+  $('.off').click ->
+    socket.emit "off"
+
+  $('.on').click ->
+    socket.emit "on"
+
