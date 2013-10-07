@@ -3,19 +3,16 @@ extends layout
 block content
   h1 Hello World
   .row
-    button.btn.btn-success.unlock Unlock
-    button.btn.btn-danger.lock Lock
+    .span4
+      button.btn.btn-success.unlock Unlock
+      button.btn.btn-danger.lock Lock
   .row
     br
-    br
   .row
-    button.btn.btn-primary.on Lights On
-    button.btn.btn-warning.off Lights Off
+    .span4
+      button.btn.btn-primary.on Lights On
+      button.btn.btn-warning.off Lights Off
   .row
-    button.btn.btn-primary.on Far lights
-    button.btn.btn-warning.off Near lights
-  
-  
-  :coffeescript
-    @a = @a || {}
-
+    .span4
+      button.btn.btn-primary.on Far lights
+      button.btn.btn-warning.off Near lights
