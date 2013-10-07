@@ -98,6 +98,14 @@ io.sockets.on "connection",  (socket) ->
     console.log "off!"
     oscClient.send "/lights", "off"
 
+  socket.on "near", (data) ->
+    console.log "near!"
+    oscClient.send "/lights", "near"
+
+  socket.on "far", (data) ->
+    console.log "far!"
+    oscClient.send "/lights", "far"
+
 #oscServer.on "message", (msg, info) ->
   #console.log msg
   #if msg[0].match "/active"

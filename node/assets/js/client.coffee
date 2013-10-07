@@ -28,3 +28,8 @@ $(window).ready ->
   $('.on').click ->
     socket.emit "on"
 
+  $('.far').click ->
+    socket.emit "far"
+
+  $('.near').click ->
+    socket.emit "near"

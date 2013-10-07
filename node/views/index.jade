@@ -2,11 +2,18 @@ extends layout
 
 block content
   h1 Hello World
-  button.btn.btn-success.unlock Unlock
-  button.btn.btn-danger.lock Lock
-  br
-  button.btn.btn-success.off Lights Off
-  button.btn.btn-danger.on Lights On
+  .row
+    button.btn.btn-success.unlock Unlock
+    button.btn.btn-danger.lock Lock
+  .row
+    br
+    br
+  .row
+    button.btn.btn-primary.on Lights On
+    button.btn.btn-warning.off Lights Off
+  .row
+    button.btn.btn-primary.on Far lights
+    button.btn.btn-warning.off Near lights
   
   
   :coffeescript

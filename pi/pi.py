@@ -42,6 +42,10 @@ def handleLights(path, tags, args, source):
     ser.write('b')
   elif args[0] == 'off':
     ser.write('d')
+  elif args[0] == 'far':
+    ser.write('f')
+  elif args[0] == 'near':
+    ser.write('n')
 
 
 server.addMsgHandler( "/door", handleDoor)
