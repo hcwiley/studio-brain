@@ -94,9 +94,10 @@ app.all "/auth/login", (req, res) ->
 
 # UI routes
 app.get "/", (req, res) ->
-  console.log req.session.auth
-  if !req.session.auth?.match('so-good')
-    return res.render 'auth/login'
+  console.log process.env.HTML_DEBUG.match('true')
+  if !process.env.HTML_DEBUG.match('true')
+    if !req.session.auth?.match('so-good')
+      return res.render 'auth/login'
   res.render "index.jade",
     title: "Studio Time"
 

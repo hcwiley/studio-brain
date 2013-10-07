@@ -3,9 +3,10 @@ html
   head
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.1, user-scalable=0;', name='viewport')
-    title= title
+    title Studio Brain
     link(rel="stylesheet",href="/css/client.css",type="text/css")
   body
-    #main
-      block content
+    #main.container
+      .row
+        block content
     != js('client')

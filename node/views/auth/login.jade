@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  -var info = info || false
   if info
     h1.red-text=info
     br
