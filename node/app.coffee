@@ -7,10 +7,12 @@ lessMiddleware = require('less-middleware')
 path = require("path")
 http = require("http")
 socketIo = require("socket.io")
-osc = require('node-osc')
-exec = require('child_process').exec
 path = require('path')
 pubDir = path.join(__dirname, 'public')
+SerialPort = require("serialport").SerialPort
+serialPort = new SerialPort process.env.SERIAL_PORT,
+  baudrate: 9600
+, false
 
 # create app, server, and web sockets
 app = express()
@@ -44,9 +46,6 @@ app.configure ->
   app.use express.static(pubDir)
   app.use express.errorHandler()  if config.useErrorHandler
 
-oscServer = new osc.Server 8888, '0.0.0.0'
-oscClient = new osc.Client "0.0.0.0", 8889
-
 io.sockets.on "connection",  (socket) ->
 
   socket?.emit "connection", "I am your father"
@@ -56,32 +55,52 @@ io.sockets.on "connection",  (socket) ->
 
   socket.on "lock", (data) ->
     console.log "lock!"
-    oscClient.send "/door", "lock"
+    serialPort.write "r", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
   socket.on "unlock", (data) ->
     console.log "unlock!"
-    oscClient.send "/door", "unlock"
+    serialPort.write "l", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
   socket.on "on", (data) ->
     console.log "on!"
-    oscClient.send "/lights", "on"
+    serialPort.write "b", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
   socket.on "off", (data) ->
     console.log "off!"
-    oscClient.send "/lights", "off"
+    serialPort.write "d", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
   socket.on "near", (data) ->
     console.log "near!"
-    oscClient.send "/lights", "near"
+    serialPort.write "n", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
   socket.on "far", (data) ->
     console.log "far!"
-    oscClient.send "/lights", "far"
+    serialPort.write "f", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
 
-#oscServer.on "message", (msg, info) ->
-  #console.log msg
-  #if msg[0].match "/active"
-    #console.log msg
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
@@ -94,19 +113,30 @@ app.all "/auth/login", (req, res) ->
 
 # UI routes
 app.get "/", (req, res) ->
-  console.log process.env.HTML_DEBUG.match('true')
-  if !process.env.HTML_DEBUG.match('true')
+  if !process.env.HTML_DEBUG || !process.env.HTML_DEBUG.match('true')
     if !req.session.auth?.match('so-good')
       return res.render 'auth/login'
   res.render "index.jade",
     title: "Studio Time"
 
+openSerial = ->
+  prev = process.env.SERIAL_PORT
+  if prev = '/dev/ttyACM0'
+    process.env.SERIAL_PORT= '/dev/ttyACM1'
+  else
+    process.env.SERIAL_PORT= '/dev/ttyACM0'
+  port = process.env.SERIAL_PORT
+  serialPort = new SerialPort port,
+      baudrate: 9600
+  , true
 
-child = exec 'python ../pi/pi.py', (error, stdout, stderr)-> 
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if error != null
-      console.log('exec error: ' + error);
+openSerial()
+
+serialPort.on 'data', (data) ->
+  console.log('data received: ' + data)
+
+serialPort.on 'error', (err) ->
+  openSerial()
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")

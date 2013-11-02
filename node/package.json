@@ -23,6 +23,7 @@
     "socket.io-client"      : "*",
     "twitter-bootstrap"     : "*",
     "node-osc"              : "*",
+    "serialport"            : "*",
     "supervisor"            : "*"
   }
 }
