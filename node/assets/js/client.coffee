@@ -1,13 +1,11 @@
 #= require jquery
-#= require underscore
-# =require backbone
 #= require bootstrapManifest
 # =require socket.io
-# =require helpers
 
 @a = @a || {}
 
 $(window).ready ->
+
   # set up the socket.io and OSC
   socket = io.connect() 
   a.socket = socket
@@ -15,6 +13,9 @@ $(window).ready ->
   socket.on "connection", (msg) ->
     console.log "connected"
     socket.emit "hello", "world"
+
+  socket.on "imageUpdate", (msg) ->
+    $("#live").attr 'src', $("#live").attr 'src'
 
   $('.lock').click ->
     socket.emit "lock"

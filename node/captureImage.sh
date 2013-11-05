@@ -1,1 +1,1 @@
-streamer -o ./public/img/foobar.jpeg
+streamer -c /dev/video1 -o public/img/foobar.jpeg

@@ -14,6 +14,7 @@ SerialPort = require("serialport").SerialPort
 serialPort = new SerialPort process.env.SERIAL_PORT,
   baudrate: 9600
 , false
+serialError = false
 
 # create app, server, and web sockets
 app = express()
@@ -102,6 +103,10 @@ io.sockets.on "connection",  (socket) ->
         openSerial()
       console.log('results ' + results)
 
+setInterval ->
+  child.execFile "./captureImage.sh", (err, stdout, stderr) ->
+    io.sockets.emit "imageUpdate", ""
+, 500
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
@@ -122,10 +127,11 @@ app.get "/", (req, res) ->
 
 openSerial = ->
   prev = process.env.SERIAL_PORT
-  if prev = '/dev/ttyACM0'
-    process.env.SERIAL_PORT= '/dev/ttyACM1'
-  else
-    process.env.SERIAL_PORT= '/dev/ttyACM0'
+  if serialError
+    if prev = '/dev/ttyACM0'
+      process.env.SERIAL_PORT= '/dev/ttyACM1'
+    else
+      process.env.SERIAL_PORT= '/dev/ttyACM0'
   port = process.env.SERIAL_PORT
   serialPort = new SerialPort port,
       baudrate: 9600
@@ -137,15 +143,8 @@ serialPort.on 'data', (data) ->
   console.log('data received: ' + data)
 
 serialPort.on 'error', (err) ->
+  serialError = true
   openSerial()
-
-setTimeout ->
-  console.log "run this: "
-  console.log "#{process.env.CWD}/captureImage.sh"
-  child.execFile "#{process.env.CWD}/captureImage.sh", (err, stdout, stderr) ->
-    console.log stdout
-, 500
-
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")

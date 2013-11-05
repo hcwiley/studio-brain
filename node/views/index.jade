@@ -28,10 +28,11 @@ block content
         button.btn.btn-info.far Far lights
       .span2
         button.btn.btn-warning.near Near lights
-  img#live(src='/img/foobar.jpeg')
-  :coffee
-    $(window).ready ->
-      window.setTimeout ->
-        $("#live").attr 'src', $("#live").attr 'src'
-      , 500
+  .row
+    br
+    hr
+    br
+  .row
+    .span6
+      img#live(src='/img/foobar.jpeg')
 
