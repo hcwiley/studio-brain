@@ -9,6 +9,7 @@ http = require("http")
 socketIo = require("socket.io")
 path = require('path')
 pubDir = path.join(__dirname, 'public')
+child = require('child_process')
 SerialPort = require("serialport").SerialPort
 serialPort = new SerialPort process.env.SERIAL_PORT,
   baudrate: 9600
@@ -137,6 +138,14 @@ serialPort.on 'data', (data) ->
 
 serialPort.on 'error', (err) ->
   openSerial()
+
+setTimeout ->
+  console.log "run this: "
+  console.log "#{process.env.CWD}/captureImage.sh"
+  child.execFile "#{process.env.CWD}/captureImage.sh", (err, stdout, stderr) ->
+    console.log stdout
+, 500
+
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
