@@ -103,10 +103,29 @@ io.sockets.on "connection",  (socket) ->
         openSerial()
       console.log('results ' + results)
 
-setInterval ->
+  socket.on "right", (data) ->
+    console.log "right!"
+    serialPort.write "s", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
+
+  socket.on "left", (data) ->
+    console.log "left!"
+    serialPort.write "a", (err, results) ->
+      if err
+        console.log('err ' + err)
+        openSerial()
+      console.log('results ' + results)
+
+
+captureImage = ->
   child.execFile "./captureImage.sh", (err, stdout, stderr) ->
     io.sockets.emit "imageUpdate", ""
-, 500
+    captureImage()
+
+captureImage()
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
@@ -122,8 +141,7 @@ app.get "/", (req, res) ->
   if !process.env.HTML_DEBUG || !process.env.HTML_DEBUG.match('true')
     if !req.session.auth?.match('so-good')
       return res.render 'auth/login'
-  res.render "index.jade",
-    title: "Studio Time"
+  res.render "index.jade"
 
 openSerial = ->
   prev = process.env.SERIAL_PORT

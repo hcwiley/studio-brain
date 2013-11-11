@@ -34,3 +34,9 @@ $(window).ready ->
 
   $('.near').click ->
     socket.emit "near"
+
+  $('.left').click ->
+    socket.emit "left"
+
+  $('.right').click ->
+    socket.emit "right"
