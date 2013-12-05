@@ -2,8 +2,12 @@
 #include <Stepper.h>
 #include <Adafruit_NeoPixel.h>
 
+#define CAM_LEFT 9
+#define CAM_RIGHT 10
+
+
 #define PIN 4
-#define FAR_LIGHT 2
+#define FAR_LIGHT 6
 #define NEAR_LIGHT 7
 
 #define GREEN			0x008000
@@ -48,6 +52,28 @@ void setup()
   Serial.println("hi");
 }
 
+void camLeft(){
+  int del = 50;
+  analogWrite(CAM_RIGHT, 0);
+  analogWrite(CAM_LEFT, 255);
+  delay(del);
+  
+  analogWrite(CAM_LEFT, 0);
+  analogWrite(CAM_RIGHT, 0);
+  delay(del);
+}
+
+void camRight(){
+  int del = 50;
+  analogWrite(CAM_LEFT, 0);
+  analogWrite(CAM_RIGHT, 255);
+  delay(del);
+  
+  analogWrite(CAM_LEFT, 0);
+  analogWrite(CAM_RIGHT, 0);
+  delay(del);
+}
+
 void loop()
 {
   while(!Serial.available()){
@@ -59,7 +85,7 @@ void loop()
       myStepper.step(1);
       delay(3);
     }
-    myStepper.step(-2);
+    myStepper.step(0);
   }
   else if( readIn == 'r'){
     dir = readIn;
@@ -67,7 +93,7 @@ void loop()
       myStepper.step(-1);
       delay(3);
     }
-    myStepper.step(2);
+    myStepper.step(0);
   }
   else if( readIn == 'b' ){
     digitalWrite(FAR_LIGHT, HIGH);
@@ -84,6 +110,12 @@ void loop()
   else if( readIn == 'f' ){
     digitalWrite(FAR_LIGHT, HIGH);
     digitalWrite(NEAR_LIGHT, LOW);
+  }
+  else if( readIn == 'a' ){
+    camLeft();
+  }
+  else if( readIn == 's' ){
+    camRight();
   }
   if(dir == 'l'){
       led.setPixelColor(0,DARKRED);
