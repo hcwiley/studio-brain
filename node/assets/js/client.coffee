@@ -7,7 +7,7 @@
 $(window).ready ->
 
   # set up the socket.io and OSC
-  @a.socket = socket = io.connect() 
+  socket = io.connect() 
   a.socket = socket
 
   socket.on "connection", (msg) ->
