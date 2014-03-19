@@ -7,7 +7,7 @@
 $(window).ready ->
 
   # set up the socket.io and OSC
-  socket = io.connect() 
+  @a.socket = socket = io.connect() 
   a.socket = socket
 
   socket.on "connection", (msg) ->
@@ -15,7 +15,7 @@ $(window).ready ->
     socket.emit "hello", "world"
 
   socket.on "imageUpdate", (msg) ->
-    $("#live").attr 'src', $("#live").attr 'src'
+    $("#live").attr 'src', "data:image/jped;base64,#{msg}"
 
   $('.lock').click ->
     socket.emit "lock"

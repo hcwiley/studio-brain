@@ -14,7 +14,7 @@
     "express"               : "*",
     "connect-assets"        : "*",
     "cookie"                : "*",
-    "jade"                  : "*",
+    "jade"                  : "0.35.*",
     "less"                  : "1.3.3",
     "less-middleware"       : "0.1.11",
     "passport"              : "*",

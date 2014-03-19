@@ -10,11 +10,13 @@ socketIo = require("socket.io")
 path = require('path')
 pubDir = path.join(__dirname, 'public')
 child = require('child_process')
+fs = require 'fs' 
 SerialPort = require("serialport").SerialPort
-serialPort = new SerialPort process.env.SERIAL_PORT,
-  baudrate: 9600
-, false
-serialError = false
+if process.env.SERIAL_PORT
+  serialPort = new SerialPort process.env.SERIAL_PORT,
+    baudrate: 9600
+  , false
+  serialError = false
 
 # create app, server, and web sockets
 app = express()
@@ -122,25 +124,28 @@ io.sockets.on "connection",  (socket) ->
 
 captureImage = ->
   child.execFile "./captureImage.sh", (err, stdout, stderr) ->
-    io.sockets.emit "imageUpdate", ""
+    fs.readFile './public/img/foobar.jpeg', (err, data)->
+      if(!err)
+        io.sockets.emit "imageUpdate", data.toString('base64')
     captureImage()
 
 captureImage()
 
 # you need to be signed for this business!
 app.all "/auth/login", (req, res) ->
-  console.log req.body.password
-  console.log process.env.STUDIO_PASSWORD
   if req.body.password?.match(process.env.STUDIO_PASSWORD)
     req.session['auth'] = 'so-good'
     return res.redirect('/')
-  return res.render('auth/login.jade', info:"you clearly don't know whats up")
+  return res.redirect '/login'
 
 # UI routes
+app.get "/login", (req, res) ->
+  return res.render 'auth/login'
+
 app.get "/", (req, res) ->
   if !process.env.HTML_DEBUG || !process.env.HTML_DEBUG.match('true')
     if !req.session.auth?.match('so-good')
-      return res.render 'auth/login'
+      return res.redirect '/login'
   res.render "index.jade"
 
 openSerial = ->
@@ -155,14 +160,15 @@ openSerial = ->
       baudrate: 9600
   , true
 
-openSerial()
-
-serialPort.on 'data', (data) ->
-  console.log('data received: ' + data)
-
-serialPort.on 'error', (err) ->
-  serialError = true
+if process.env.SERIAL_PORT
   openSerial()
+
+  serialPort.on 'data', (data) ->
+    console.log('data received: ' + data)
+  
+  serialPort.on 'error', (err) ->
+    serialError = true
+    openSerial()
 
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")

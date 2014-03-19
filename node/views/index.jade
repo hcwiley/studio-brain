@@ -41,3 +41,7 @@ block content
   .row
       img#live(src='/img/foobar.jpeg')
 
+  :coffeescript
+    $(window).ready ->
+      @a.socket.emit "index", ""
+    
