@@ -7,8 +7,8 @@ else
     SOURCE="/dev/video1"
   fi
 fi
-streamer -c $SOURCE -o public/img/foobar.jpeg &
-sleep 0.5
+streamer -j 40 -c $SOURCE -s 320x240 -o public/img/foobar.jpeg &
+sleep 0.3
 #sysctl vm.overcommit_memory=0
 PID=$(pidof streamer)
 #echo $PID
