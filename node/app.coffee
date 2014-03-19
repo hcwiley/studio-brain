@@ -126,7 +126,8 @@ captureImage = ->
   child.execFile "./captureImage.sh", (err, stdout, stderr) ->
     fs.readFile './public/img/foobar.jpeg', (err, data)->
       if(!err)
-        io.sockets.emit "imageUpdate", data.toString('base64')
+        if data.length > 0
+          io.sockets.emit "imageUpdate", data.toString('base64')
     captureImage()
 
 captureImage()
